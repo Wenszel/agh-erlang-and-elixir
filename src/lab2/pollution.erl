@@ -13,7 +13,7 @@
 -record(monitor, {coordinates_to_name, name_to_measurements}).
 -record(measurement, {type, value, time}).
 
--export([create_monitor/0, add_station/3, add_value/5, remove_value/4, get_one_value/4, get_station_mean/3, get_daily_mean/3]).
+-export([create_monitor/0, add_station/3, add_value/5, remove_value/4, get_one_value/4, get_station_mean/3, get_daily_mean/3, get_air_quality_index/3]).
 
 create_monitor() ->  #monitor{coordinates_to_name = #{}, name_to_measurements = #{}}.
 
@@ -126,9 +126,30 @@ get_daily_mean(Type, Date, Monitor) ->
                                            {MDate, _} = M#measurement.time,
                                            case M#measurement.type == Type andalso MDate == Date of
                                              true -> {AccSum + M#measurement.value, AccCount + 1};
-                                               false -> {AccSum, AccCount}
+                                             false -> {AccSum, AccCount}
                                            end
                                         end, {0, 0}, Measurements),
     {Sum + PartSum, Count + PartCount}
                             end, {0, 0}, Monitor#monitor.name_to_measurements),
   safe_div(Sum, Count).
+
+get_norms() -> #{"PM10" => 75, "PM25" => 60}.
+
+get_measurements_by_hour(Measurements, Hour) -> lists:filter(fun(#measurement{time={{_,_,_},{H,_,_}}}) -> Hour == H end, Measurements).
+
+% Returns maximum percentage of norm for given hour
+get_air_quality_index({Long, Lat}, Hour, Monitor) ->
+  handle_coordinates({Long, Lat}, fun(Name) -> get_air_quality_index(Name, Hour, Monitor) end, Monitor);
+get_air_quality_index(Name, Hour, Monitor) ->
+  maybe
+    {ok, Measurements} ?= maps:find(Name, Monitor#monitor.name_to_measurements),
+    Maximum = lists:foldl(fun(#measurement{type=Type, value=Value}, Max)->
+                              max(Max, (Value * 100) / maps:get(Type, get_norms()))
+                          end, -1, get_measurements_by_hour(Measurements, Hour)),
+    case Maximum of
+      -1 -> {error, "No measurements"};
+      _ -> Maximum
+    end
+  else
+    error -> {error, "Station not found"}
+  end.

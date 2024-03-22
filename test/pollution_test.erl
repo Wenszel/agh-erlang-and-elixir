@@ -197,3 +197,10 @@ get_daily_mean_fail_test() ->
   ?assertMatch({error, _}, pollution:get_daily_mean("PM25",{2023,3,27}, M2)),
   ?assertMatch({error, _}, pollution:get_daily_mean("PM10",{2023,3,29}, M2)).
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+get_air_quality_index_test() ->
+  M = pollution:add_station("Stacja 2", {2,2}, pollution:add_station("Stacja 1", {1,1}, pollution:create_monitor())),
+  M1 = pollution:add_value("Stacja 1", {{2023,3,27},{11,16,10}}, "PM25", 10, M),
+  M2 = pollution:add_value("Stacja 1", {{2023,3,27},{11,16,11}}, "PM25", 60, M1),
+  ?assertMatch(100.0, pollution:get_air_quality_index({1, 1}, 11, M2)).
+
