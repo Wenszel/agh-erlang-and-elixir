@@ -4,7 +4,7 @@ defmodule PollutiondbWeb.SearchBar do
   def render(assigns) do
     ~H"""
     <div>
-      <h2 class="text-2xl font-bold mt-6 mb-4">Search</h2>
+      <h2 class="text-2xl font-bold mb-4">Search</h2>
       <form phx-change="search" class="mb-4">
         <input
           type="text"

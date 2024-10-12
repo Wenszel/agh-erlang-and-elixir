@@ -45,18 +45,22 @@ defmodule PollutiondbWeb.ReadingLive do
 
   def render(assigns) do
     ~H"""
-    <div class="max-w-4xl mx-auto">
-      <.live_component
-        module={PollutiondbWeb.InsertReading}
-        id="insert"
-        stations={@stations}
-        station_id={@station_id}
-        type={@type}
-        value={@value}
-        new_date={@new_date}
-      />
-      <.live_component module={PollutiondbWeb.DateSearch} id="datesearch" date={@date} />
-      <.live_component module={PollutiondbWeb.ReadingList} id="readings" readings={@readings} />
+    <div class="flex flex-col lg:flex-row justify-between">
+      <div class="flex flex-col w-64 shadow-md p-4 bg-gray-200 h-screen">
+        <.live_component
+          module={PollutiondbWeb.InsertReading}
+          id="insert"
+          stations={@stations}
+          station_id={@station_id}
+          type={@type}
+          value={@value}
+          new_date={@new_date}
+        />
+      </div>
+      <div class="p-4 flex-1 justify-center">
+        <.live_component module={PollutiondbWeb.DateSearch} id="datesearch" date={@date} />
+        <.live_component module={PollutiondbWeb.ReadingList} id="readings" readings={@readings} />
+      </div>
     </div>
     """
 end

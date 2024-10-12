@@ -31,10 +31,14 @@ defmodule PollutiondbWeb.StationLive do
 
   def render(assigns) do
     ~H"""
-    <div class="max-w-4xl mx-auto">
-      <.live_component module={PollutiondbWeb.InsertStation} id="insert" new_name={@new_name} lat={@lat} lon={@lon} />
-      <.live_component module={PollutiondbWeb.SearchBar} id="searchbar" name={@name} />
-      <.live_component module={PollutiondbWeb.StationList} id="stations" stations={@stations} />
+    <div class="flex flex-col lg:flex-row justify-between">
+      <div class="flex flex-col w-64 shadow-md p-4 bg-gray-200">
+        <.live_component module={PollutiondbWeb.InsertStation} id="insert" new_name={@new_name} lat={@lat} lon={@lon} />
+      </div>
+      <div class="p-4 flex-1 justify-center">
+        <.live_component module={PollutiondbWeb.SearchBar} id="searchbar" name={@name} />
+        <.live_component module={PollutiondbWeb.StationList} id="stations" stations={@stations} />
+      </div>
     </div>
     """
   end

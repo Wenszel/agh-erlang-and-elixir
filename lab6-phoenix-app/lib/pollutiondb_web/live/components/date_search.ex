@@ -4,7 +4,7 @@ defmodule PollutiondbWeb.DateSearch do
   def render(assigns) do
     ~H"""
     <div>
-      <h2 class="text-2xl font-bold mt-6 mb-4">Search by Date</h2>
+      <h2 class="text-2xl font-bold mb-4">Search by Date</h2>
       <form phx-change="search" class="space-y-4">
         <div>
           <label class="block font-medium">Date</label>

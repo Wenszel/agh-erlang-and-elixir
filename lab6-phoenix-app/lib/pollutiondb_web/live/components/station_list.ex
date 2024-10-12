@@ -5,7 +5,7 @@ defmodule PollutiondbWeb.StationList do
     ~H"""
     <div>
       <h2 class="text-2xl font-bold mt-6 mb-4">Stations</h2>
-      <table class="min-w-full bg-white shadow-md rounded-lg">
+      <table class="min-w-full bg-white shadow-md rounded-lg overflow-scroll">
         <thead class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
           <tr>
             <th class="py-3 px-6 text-left">Name</th>
