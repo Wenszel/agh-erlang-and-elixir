@@ -45,36 +45,19 @@ defmodule PollutiondbWeb.ReadingLive do
 
   def render(assigns) do
     ~H"""
-
-    <h2>Search</h2>
-    <form phx-submit="insert">
-      <select name="station_id">
-        <%= for station <- @stations do %>
-          <option label={station.name} value={station.id} selected={station.id == @station_id}/>
-        <% end %>
-      </select>
-      Type: <input type="text" name="type" value={@type} /><br/>
-      Value: <input type="number" name="value" value={@value} /><br/>
-      Date: <input type="date" name="new_date" value={@new_date} /><br/>
-      <input type="submit" />
-    </form>
-    <form phx-change="search">
-    Date: <input type="date" name="date" value={@date} /><br/>
-    </form>
-    <table>
-      <tr>
-        <th>Date</th><th>Time</th><th>Type</th><th>Value</th><th>Station</th>
-      </tr>
-      <%= for reading <- @readings do %>
-      <tr>
-          <td><%= reading.date %></td>
-          <td><%= reading.time %></td>
-          <td><%= reading.type %></td>
-          <td><%= reading.value %></td>
-          <td><%= reading.station.name %></td>
-        </tr>
-      <% end %>
-    </table>
+    <div class="max-w-4xl mx-auto">
+      <.live_component
+        module={PollutiondbWeb.InsertReading}
+        id="insert"
+        stations={@stations}
+        station_id={@station_id}
+        type={@type}
+        value={@value}
+        new_date={@new_date}
+      />
+      <.live_component module={PollutiondbWeb.DateSearch} id="datesearch" date={@date} />
+      <.live_component module={PollutiondbWeb.ReadingList} id="readings" readings={@readings} />
+    </div>
     """
 end
 end
