@@ -19,3 +19,9 @@ Topics: Maps, Records, List Comprehensions
 Topics: Actors model, BEAM Concurrency, Dynamic code loading
 
 [Link to the air pollution app after lab3](https://github.com/Wenszel/agh-erlang-and-elixir/blob/main/src/lab3/pollution_server.erl)
+
+
+# Screenshots
+![Screenshot](https://github.com/Wenszel/agh-erlang-and-elixir/blob/main/img/phoenix1.png)
+![Screenshot](https://github.com/Wenszel/agh-erlang-and-elixir/blob/main/img/phoenix2.png)
+![Screenshot](https://github.com/Wenszel/agh-erlang-and-elixir/blob/main/img/phoenix3.png)
